@@ -1,0 +1,44 @@
+.head{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding-top: 50px;
+}
+.lform form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding-top: 50px;
+}
+.lform input{
+    border-radius: 20px;
+    border: 1px black solid;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.l-btn{
+    margin-top: 10px;
+    border: none;
+    background-color: #386fb0;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 20px 5px 20px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.l-btn a{
+    color: white;
+}
+.l-btn a:hover{
+    text-decoration: none;
+}
+.f-contain{
+    width: 400px;
+    height: 500px;
+    background-color: #ffca00;
+    margin-left: 350px;
+    margin-top: 70px;
+    border-radius: 50px;
+}
