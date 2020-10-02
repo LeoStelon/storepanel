@@ -130,6 +130,10 @@
                             <li class="app-sidebar__heading" style="width: 100%;">
                                 <a href="#invertory" role="tab" data-toggle="tab">Invertory</a>
                             </li>
+
+                            <li class="app-sidebar__heading" style="width: 100%;">
+                                <a href="#stock" id="stocktab" role="tab" data-toggle="tab">Stock</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -371,6 +375,7 @@
                                         <!-- Available Orders ends here -->
                                     </div>
 
+                                    <!-- Invertory Tab -->
                                     <div role="tabpanel" class="tab-pane fade" id="invertory">
                                         <div class="app-page-title">
                                             <div class="page-title-wrapper">
@@ -388,10 +393,32 @@
                                         </div>
                                         <h1>Inventory Goes Here</h1>
                                     </div>
+
+                                    <!-- Stock Tab -->
+                                    <div role="tabpanel" class="tab-pane fade" id="stock">
+                                        <h1>Stock</h1>
+                                        <table id="stockTable"
+                                            class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Description</th>
+                                                    <th>View More</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Iterating Delivery Boys from dashboard.js -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <!-- my code ends -->
                 </div>
                 <footer></footer>

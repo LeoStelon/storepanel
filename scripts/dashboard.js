@@ -15,7 +15,7 @@ document.getElementById("calendar2").addEventListener("change", function () {
 });
 
 window.onload = async () => {
-  var orderstab = document.querySelector("a#dashboardtab");
+  var orderstab = document.querySelector("a#stocktab");
   orderstab.click();
   dashboard();
   await updateDeliveryBoys();
@@ -25,6 +25,7 @@ window.onload = async () => {
   document.getElementById("checkreport").addEventListener("click", () => {
     updateAnalysisDate();
   });
+  updateStocks();
 };
 
 function dashboard() {
@@ -164,7 +165,7 @@ async function updateMyOrders() {
     )
       .then((res) => res.json())
       .then((data) => {
-        //  //Deletes loading td when data fetched
+        //Deletes loading td when data fetched
         document.getElementById("myordersTable").deleteRow(1);
 
         //Iterate and updates dom with orders
@@ -218,7 +219,6 @@ async function updateAnalysisToday() {
     )
       .then((res) => res.json())
       .then(async (data) => {
-        console.log(data);
         document.getElementById("loader").style.display = "none";
         document.getElementById("analysis order").innerHTML =
           data.data.total_orders;
@@ -265,6 +265,62 @@ async function updateAnalysisDate() {
         data.data.total_no_sales;
 
         document.getElementById("loader1").style.display = "none";
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// Stock Tab
+async function updateStocks() {
+  //Table reference
+  var table = document.getElementById("stockTable");
+  var tr = table.insertRow(1);
+  tr.innerHTML=`<td style="text-align:center;" colspan="5">loading...</td>`;
+  try {
+    await fetch(
+      "https://api-ecommerce.datavivservers.in/mobile_api/GetOnlyVendorStockDetails/",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "token " + token,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        //Deletes loading td when data fetched
+        table.deleteRow(1)
+
+        //Iterate and updates dom with orders
+        console.log(data)
+        if (data.data.length == 0) {
+          var tr = table.insertRow();
+          tr.innerHTML = `<td style="text-align:center;" colspan="4">No Orders</td>`;
+        } else {
+          data.data.forEach((element) => {
+            var idcell = `<td>${element.product_Id}</td>`;
+            var namecell = `<td>${
+              element.product_name ? "paid" : "not paid"
+            }</td>`;
+            var pricecell = `<td>${element.product_price}</td>`;
+            var descriptioncell = `<td>${element.product_description}</td>`;
+            var tr = table.insertRow();
+            var cell1 = tr.insertCell(0);
+            var cell2 = tr.insertCell(1);
+            var cell3 = tr.insertCell(2);
+            var cell4 = tr.insertCell(3);
+            var cell5 = tr.insertCell(4);
+            cell1.innerHTML = idcell;
+            cell2.innerHTML = namecell;
+            cell3.innerHTML = pricecell;
+            cell4.innerHTML = descriptioncell;
+            cell5.innerHTML = `<a target="_blank" href="http://127.0.0.1:5500/order.html?view=true&orderid=${element.order_id}">
+            View Details
+        </a>`;
+          });
+        }
       });
   } catch (error) {
     console.log(error);
