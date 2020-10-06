@@ -7,10 +7,11 @@ let searchParams = new URLSearchParams(window.location.search);
 // Order ID
 var orderid = searchParams.get("orderid");
 //View mode
-var view=searchParams.get('view')
-if(view){
-  document.getElementById('actions').style.display='none';
+var view = searchParams.get("view");
+if (view) {
+  document.getElementById("actions").style.display = "none";
 }
+
 
 window.onload = async () => {
   await getorder();
@@ -111,10 +112,6 @@ function productImage(src, price) {
   </div>`;
 }
 
-function test(status) {
-  console.log(status);
-}
-
 //Accept or Reject
 async function assign(status) {
   await fetch(
@@ -156,10 +153,12 @@ async function assign(status) {
             .then(async (data) => {
               if (data.code == 200) {
                 alert("Order has been assigned to the Delivery Boy.");
+                window.close();
               }
             });
         } else {
           alert("This order won't be shown again to you. Thank You.");
+          window.close();
         }
       } else {
         alert("Oops, Please try again.");

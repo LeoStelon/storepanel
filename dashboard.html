@@ -88,7 +88,7 @@
                     <div><img src="./assets/images/logo.png" height="50" alt="logo"></div>
                     <div class="header__pane ml-auto">
                         <div>
-                            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic is-active"
                                 data-class="closed-sidebar">
                                 <span class="hamburger-box">
                                     <span class="hamburger-inner"></span>
@@ -124,17 +124,22 @@
                             </li>
 
                             <li class="app-sidebar__heading" style="width: 100%;">
-                                <a href="#orders" role="tab"  id='orderstab' data-toggle="tab">Orders</a>
+                                <a href="#orders" role="tab" data-toggle="tab">Orders</a>
                             </li>
 
-                            <li class="app-sidebar__heading" style="width: 100%;">
+                            <!-- <li class="app-sidebar__heading" style="width: 100%;">
                                 <a href="#invertory" role="tab" data-toggle="tab">Invertory</a>
-                            </li>
+                            </li> -->
 
                             <li class="app-sidebar__heading" style="width: 100%;">
                                 <a href="#stock" id="stocktab" role="tab" data-toggle="tab">Stock</a>
                             </li>
+                            
+                            <li onclick="localStorage.clear();location.replace('index.html')" class="app-sidebar__heading" style="width: 100%;">
+                                <a href="#invertory" role="tab" data-toggle="tab">Log Out</a>
+                            </li>
                         </ul>
+                        <img src="./assets/images/sardarheads.png" alt="sardarheads" srcset="" height="200px">
                     </div>
                 </div>
             </div>
@@ -165,14 +170,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="main-card mb-3 card">
-                                                    <div class="card-header">Delivery Boys
-                                                        <div class="btn-actions-pane-right">
-                                                            <div role="group" class="btn-group-sm btn-group">
-                                                                <button class="active btn btn-focus">Last Week</button>
-                                                                <button class="btn btn-focus">All Month</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <div class="card-header">Delivery Boys</div>
                                                     <div class="table-responsive">
                                                         <table id="deliveryboysTable"
                                                             class="align-middle mb-0 table table-borderless table-striped table-hover">
@@ -181,6 +179,7 @@
                                                                     <th>#</th>
                                                                     <th>Name</th>
                                                                     <th>Phone</th>
+                                                                    <th>Location</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -188,12 +187,6 @@
                                                                 <!-- Iterating Delivery Boys from dashboard.js -->
                                                             </tbody>
                                                         </table>
-                                                    </div>
-                                                    <div class="d-block text-center card-footer">
-                                                        <button
-                                                            class="mr-2 btn-icon btn-icon-only btn btn-outline-danger"><i
-                                                                class="pe-7s-trash btn-icon-wrapper"> </i></button>
-                                                        <button class="btn-wide btn btn-success">Save</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -375,7 +368,7 @@
                                         <!-- Available Orders ends here -->
                                     </div>
 
-                                    <!-- Invertory Tab -->
+                                    <!-- Invertory Tab
                                     <div role="tabpanel" class="tab-pane fade" id="invertory">
                                         <div class="app-page-title">
                                             <div class="page-title-wrapper">
@@ -392,7 +385,7 @@
                                             </div>
                                         </div>
                                         <h1>Inventory Goes Here</h1>
-                                    </div>
+                                    </div> -->
 
                                     <!-- Stock Tab -->
                                     <div role="tabpanel" class="tab-pane fade" id="stock">
@@ -401,11 +394,11 @@
                                             class="align-middle mb-0 table table-borderless table-striped table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
-                                                    <th>Name</th>
+                                                    <th>S.No</th>
+                                                    <th>Product Name</th>
                                                     <th>Price</th>
                                                     <th>Description</th>
-                                                    <th>View More</th>
+                                                    <th>Category</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -427,7 +420,6 @@
         </div>
     </div>
     <script type="text/javascript" src="./scripts/main.js"></script>
-    <script type="text/javascript" src="./scripts/main2.js"></script>
     <!-- my code -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>

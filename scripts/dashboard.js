@@ -1,21 +1,35 @@
 // Token from local Storage
 var token = localStorage.getItem("token");
+if(!token){
+  console.log('Not Authorized')
+  location.replace('http://127.0.0.1:5500/')//Change Here
+}
 
 //Deliverboys
 var deliveryBoys = [];
 var calendar1;
 var calendar2;
 document.getElementById("calendar1").addEventListener("change", function () {
-  var date = new Date(this.value)
-  calendar1=date.getDate()+'/'+(parseInt(date.getMonth())+1).toString()+'/'+date.getFullYear();
+  var date = new Date(this.value);
+  calendar1 =
+    date.getDate() +
+    "/" +
+    (parseInt(date.getMonth()) + 1).toString() +
+    "/" +
+    date.getFullYear();
 });
 document.getElementById("calendar2").addEventListener("change", function () {
-  var date = new Date(this.value)
-  calendar2=date.getDate()+'/'+(parseInt(date.getMonth())+1).toString()+'/'+date.getFullYear();
+  var date = new Date(this.value);
+  calendar2 =
+    date.getDate() +
+    "/" +
+    (parseInt(date.getMonth()) + 1).toString() +
+    "/" +
+    date.getFullYear();
 });
 
 window.onload = async () => {
-  var orderstab = document.querySelector("a#stocktab");
+  var orderstab = document.querySelector("a#dashboardtab");
   orderstab.click();
   dashboard();
   await updateDeliveryBoys();
@@ -25,13 +39,12 @@ window.onload = async () => {
   document.getElementById("checkreport").addEventListener("click", () => {
     updateAnalysisDate();
   });
-  updateStocks();
+  document.querySelector("a#stocktab").addEventListener("click", function () {
+    updateStocks();
+  });
 };
 
 function dashboard() {
-  var tempName = localStorage.getItem("first_name"); //Check Here
-  var widget_heading = document.querySelector(".widget-heading");
-  widget_heading.textContent = tempName;
   fetch(
     "https://api-ecommerce.datavivservers.in/mobile_api/VendorStoreDetails/",
     {
@@ -113,9 +126,13 @@ function updateRows(deliveryboys) {
     var cell1 = tr.insertCell(0);
     var cell2 = tr.insertCell(1);
     var cell3 = tr.insertCell(2);
+    var cell4 = tr.insertCell(3);
     cell1.innerHTML = idcell;
     cell2.innerHTML = namecell;
     cell3.innerHTML = phonecell;
+    cell4.innerHTML = `<td><a target="_blank" href="locate.html?deliveryboyid=${element.delivery_boyId}">
+    Locate
+</a></td>`;
     deliveryBoys.push(element.delivery_full_name);
   });
 }
@@ -196,7 +213,7 @@ function generateRows(data, table) {
       cell1.innerHTML = idcell;
       cell2.innerHTML = paystatuscell;
       cell3.innerHTML = orderstatuscell;
-      cell4.innerHTML = `<a target="_blank" href="http://127.0.0.1:5500/order.html?view=true&orderid=${element.order_id}">
+      cell4.innerHTML = `<a target="_blank" href="order.html?view=true&orderid=${element.order_id}">
       View Details
   </a>`;
     });
@@ -252,17 +269,17 @@ async function updateAnalysisDate() {
         },
         body: JSON.stringify({
           startDate: calendar1,
-          endDate: calendar2
+          endDate: calendar2,
         }),
       }
     )
       .then((res) => res.json())
       .then(async (data) => {
-        document.getElementById('pastorderAnalysis').style.display='flex';
+        document.getElementById("pastorderAnalysis").style.display = "flex";
         document.getElementById("analysis salesamount").innerHTML =
-        data.data.total_sale_amount;
+          data.data.total_sale_amount;
         document.getElementById("analysis sales").innerHTML =
-        data.data.total_no_sales;
+          data.data.total_no_sales;
 
         document.getElementById("loader1").style.display = "none";
       });
@@ -276,7 +293,7 @@ async function updateStocks() {
   //Table reference
   var table = document.getElementById("stockTable");
   var tr = table.insertRow(1);
-  tr.innerHTML=`<td style="text-align:center;" colspan="5">loading...</td>`;
+  tr.innerHTML = `<td style="text-align:center;" colspan="5">loading...</td>`;
   try {
     await fetch(
       "https://api-ecommerce.datavivservers.in/mobile_api/GetOnlyVendorStockDetails/",
@@ -291,19 +308,17 @@ async function updateStocks() {
       .then((res) => res.json())
       .then((data) => {
         //Deletes loading td when data fetched
-        table.deleteRow(1)
+        table.deleteRow(1);
 
         //Iterate and updates dom with orders
-        console.log(data)
+        console.log(data);
         if (data.data.length == 0) {
           var tr = table.insertRow();
           tr.innerHTML = `<td style="text-align:center;" colspan="4">No Orders</td>`;
         } else {
-          data.data.forEach((element) => {
-            var idcell = `<td>${element.product_Id}</td>`;
-            var namecell = `<td>${
-              element.product_name ? "paid" : "not paid"
-            }</td>`;
+          data.data.forEach((element, index) => {
+            var idcell = `<td>${index}</td>`;
+            var namecell = `<td>${element.product_name}</td>`;
             var pricecell = `<td>${element.product_price}</td>`;
             var descriptioncell = `<td>${element.product_description}</td>`;
             var tr = table.insertRow();
@@ -316,9 +331,7 @@ async function updateStocks() {
             cell2.innerHTML = namecell;
             cell3.innerHTML = pricecell;
             cell4.innerHTML = descriptioncell;
-            cell5.innerHTML = `<a target="_blank" href="http://127.0.0.1:5500/order.html?view=true&orderid=${element.order_id}">
-            View Details
-        </a>`;
+            cell5.innerHTML = `<td>${element.product_category_id}</td>`;
           });
         }
       });

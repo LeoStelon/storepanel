@@ -1,14 +1,15 @@
+var token=localStorage.getItem('token');
+if(token){
+  location.replace('dashboard.html')
+}
+
 window.onload = function () {
   //Login page
-  if (window.location.href == "http://127.0.0.1:5500/") {
-    // Change here(url)
-    //Changed the condition link
-    var loginbtn = document.querySelector(".l-btn");
-    loginbtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      login();
-    });
-  }
+  var loginbtn = document.querySelector(".l-btn");
+  loginbtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    login();
+  });
 
   function login() {
     var username = document.getElementById("username").value;
@@ -50,12 +51,45 @@ window.onload = function () {
           .then((data) => {
             var message = data.message;
             if (message == "OK") {
-              console.log("reached here");
-              var { first_name } = data.data[0];
+              console.log(data);
+              var { first_name, vendor_id } = data.data[0];
               localStorage.setItem("first_name", first_name);
-              var test = localStorage.getItem("first_name");
-              console.log("first name: " + test);
-              window.location.replace("http://127.0.0.1:5500/dashboard.html"); // Change here(url)
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                  localStorage.setItem('vendorLocationLat',position.coords.latitude)
+                  localStorage.setItem('vendorLocationLon',position.coords.longitude)
+                  fetch(
+                    "https://api-ecommerce.datavivservers.in/mobile_api/AddVendorLatLon/",
+                    {
+                      method: "Post",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: "token " + token,
+                      },
+                      body: JSON.stringify({
+                        vendor_Id: vendor_id,
+                        vendor_lat: position.coords.latitude,
+                        vendor_lon: position.coords.longitude,
+                      }),
+                    }
+                  ).then((res) =>
+                    res.json().then((res) => {
+                      if (res.code != 200) {
+                        return alert(
+                          "Location is required to access the site, Try again"
+                        );
+                      }
+                      window.location.replace(
+                        "dashboard.html"
+                      ); // Change here(url)
+                    })
+                  );
+                });
+              } else {
+                alert(
+                  "Geolocation is not supported by this browser.Try in another browser"
+                );
+              }
             } else console.log("Authorization Denied");
           })
           .catch(function (error) {
