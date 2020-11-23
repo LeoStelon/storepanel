@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Punjab Sind</title>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./global.css" />
+
+    <style>
+        body{
+            background: linear-gradient(135deg, #caf2fc 50%, #f1f2f6 50%);
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+</head>
+<body>
+
+    <section class="d-flex justify-content-center container-fluid">
+        <section class="col-12 col-sm-6 col-md-3">
+
+            <form class="form-container"   id="deliveryboyregistrationfomid">
+
+                <div>
+                    <h3>Delivery Boy Registration</h3>
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" class="form-control" id="deliveryboynameId">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="number"  onKeyPress="if(this.value.length==10) return false;" class="form-control" id="deliveryboymobnoId">
+                </div>
+                <div class="form-group">
+                    <label for="passname">Password</label>
+                    <input type="password" class="form-control"  id="deliveryboypasswordId">
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+
+        </section>
+    </section>
+
+    <script>
+
+var token=localStorage.getItem('AUTH_TOKEN')    
+
+$(document).ready( function (){
+    
+ $(document).on("submit","#deliveryboyregistrationfomid" , function(e){
+             e.preventDefault();
+        var dname = $("#deliveryboynameId").val();
+        var dmobno = $("#deliveryboymobnoId").val();
+        var dpass = $("#deliveryboypasswordId").val();
+       
+        var deliveryBoyRegistrationModel = {
+
+            "full_name": dname ,
+            "mob_no": dmobno,
+            "password": dpass
+        };
+
+$.ajax({
+              method: "POST",
+
+              dataType:"json",
+
+              data: JSON.stringify(deliveryBoyRegistrationModel),
+              url: "https://api-ecommerce.datavivservers.in/mobile_api/CreateDeliveryBoyRegister/",
+              headers: {
+                 "Content-Type": "application/json",
+                  Authorization: "token "+token,
+                },
+
+              contentType: "application/json;charset=utf-8",
+
+              crossDomain : true,
+
+              complete: function(data){
+                        console.log(data);
+                        if(data.status==200){
+                            if(data.responseJSON.status=="success" && data.responseJSON.message=="OK"){
+                                alert("Delivery Boy Registered!");
+                                window.close();
+                            }
+                        }else if(data.status==400){
+                            if(data.responseJSON.status=="error"){
+                                for(key in data.responseJSON.message){
+                                    alert(key+" : "+data.responseJSON.message[key])
+                                }
+                            }
+                        }else{
+                            alert('Something went wrong')
+                        }
+                },
+              failure: function(errMsg) {
+                console.log(errMsg.status);
+              }
+         });
+  });
+});
+
+
+
+    </script>
+
+
+
+</body>
+</html>

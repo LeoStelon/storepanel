@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/global.css" />
+
+    <title></title>
+</head>
+
+<style>
+    body{
+        background: linear-gradient(135deg, #caf2fc 50%, #f1f2f6 50%);
+        background-repeat: no-repeat;
+        height: 120vh;
+        display: flex;
+        align-items: center;
+    }
+</style>
+
+<body>
+
+    <section class="d-flex justify-content-center container-fluid">
+        <section class="col-12 col-sm-6 col-md-3">
+
+            <form class="form-container" name="AddVenStoreForm" method="post" id="AddOfferFormId">
+               
+                <div class="form-group">
+                    <label for="birthdaytime">Offer Start Date</label>
+                    <input type="datetime-local" value="" id="offerStartDateId" required>
+                </div>
+                <div class="form-group">
+                    <label for="birthdaytime">Offer End Date</label>
+                    <input type="datetime-local" id="offerEndDateId"  value="" required >
+                </div>
+                <div class="form-group">
+                    <label for="">Offer Title Name</label>
+                    <input type="text" class="form-control" name="" id="offertitleId" value="" required >
+                </div>
+                <div class="form-group">
+                    <label for="">Offer On Products</label>
+                    <input type="number" class="form-control" name="" id="OfferprodId" value="" required >
+                </div>
+                <div class="form-group">
+                    <label for="">Offer Post</label>
+                    <input type="text" class="form-control" name="" id="offerPostId" value="" required >
+                </div>
+                <div class="form-group">
+                    <label for="">Offer Discription</label>
+                    <input type="text" class="form-control" name="" id="offerDiscripId" value="" required >
+                </div>
+                <div class="form-group">
+                    <label for="">Discount</label>
+                    <input type="number"  class="form-control" name="" id="discountId" value="" required >
+                </div>
+                <div class="form-group">
+                    <label for="">PROMO Code</label>
+                    <input type="text"  class="form-control" name="" id="promoId" value=""required>
+                </div>
+                <div>
+                    <select  id="offerStatusId" required>
+                        <option >Offer Status</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                      </select>
+                </div>
+
+
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+
+        </section>
+    </section>
+
+    <script>
+
+         
+                $(document).ready(function () {
+                    var url_string = window.location.href;
+                    var url = new URL(url_string);
+                    var vendorId = url.searchParams.get("vendorId");
+                    console.log(vendorId);
+                    var url ="https://api-ecommerce.datavivservers.in/mobile_api/GetAllvendorsDetails/";
+
+                     
+                    
+                    $(document).on("submit","#AddOfferFormId" , function(e){
+                            e.preventDefault();
+                            
+                            var offerStartDate = $("#offerStartDateId").val();
+                            var offerEndDate = $("#offerEndDateId").val();
+                            var offertitle = $("#offertitleId").val();
+                            var OfferOnprod = $("#OfferprodId").val();
+                            var offerPost = $("#offerPostId").val();
+                            var offerDiscrip = $("#offerDiscripId").val();
+                            var discount = $("#discountId").val();
+                            var promo = $("#promoId").val();
+                            var offerStatusId = $("#offerStatusId").val();            
+                            
+                            var addOfferModel = {
+                                offer_start_date : offerStartDate,
+                                offer_end_date : offerEndDate,
+                                offer_title_name : offertitle,
+                                offers_on_product : OfferOnprod,
+                                offer_post : offerPost,
+                                offer_description : offerDiscrip,
+                                promo_code : promo,
+                                discount : discount,
+                                status : offerStatusId 
+                              }; 
+        
+                    $.ajax({
+        
+                            method : "POST",
+                            dataType : "json",
+                            data : JSON.stringify(addOfferModel),
+                            url : "https://api-ecommerce.datavivservers.in/mobile_api/OfferDetails/",
+                            contentType: "application/json;charset=utf-8",
+                  
+                            complete : function(data){
+                                    console.log(data);
+                                    if(data.status==200){
+                                       if(data.responseJSON.status=="success" && data.responseJSON.message=="OK"){
+                                       alert("Offer Added");
+                                       window.close();
+                                     }else{
+                                         alert(data.responseJSON.message.discount);   
+                                        } 
+                                     }                               
+                                }
+                         });                
+
+                    });     
+            });      
+
+    </script>
+
+</body>
+</html>

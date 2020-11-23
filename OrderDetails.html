@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/global.css" />
+
+    <style>
+        body{
+            background: linear-gradient(135deg, #caf2fc 50%, #f1f2f6 50%);
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+</head>
+<body>
+    <section class="d-flex justify-content-center container-fluid container-fluid">
+        <section class="col-15 col-sm-5 col-md-7">
+            <div class="card text-center">
+                <div class="card-header">
+                    <div><h5>ORDER DETAILS</h5></div>
+                </div>
+                <div class="card-body">
+                    
+                    <div class=" rows">
+                        <label>User Name :</label>
+                        <label id="usernameId"></label>
+                    </div>
+                    <div class=" rows">
+                        <label>User Mobile Number :</label>
+                        <label id="umobnoID"></label>
+                    </div>
+                    <div>
+                        <label>Vendor Store Name :</label>
+                        <label id="vendorstoreNameId"></label>
+                    </div>
+                    <div>
+                        <label>Vendor Mobile Number :</label>
+                        <label id="venmobNoId"></label>
+                    </div>
+                    <div>
+                        <label>Payment Mode :</label>
+                        <label id="paymodeId"></label>
+                    </div>
+                    <div>
+                        <label> Payable Amount :</label>
+                        <label id="payAmtId"></label>
+                    </div>  
+                    <div>
+                        <label>Delivery Charges :</label>
+                        <label id="deliverychargesId"></label>
+                    </div>
+                    <div>
+                        <label> Delivery Status :</label>
+                        <label id="deliverystatusId"></label>
+                    </div>
+                    <form id="updateven">
+                        <div class="form-group">
+                            <select id="updateVendId">
+                                <option value="">Update Vendor</option>
+                            </select>
+                            <input type="submit" class="btn btn-primary" value="Update Vendor">    
+                        </div>
+                    </form>
+                    
+        </section>
+    </section>
+
+
+
+    <script>
+                var vendorId ;
+                $(document).ready(function(){
+
+                     var url_string = window.location.href;
+                     var url = new URL(url_string);
+                     var id = url.searchParams.get("id");
+                     console.log(id);
+
+                     $.getJSON("https://api-ecommerce.datavivservers.in/mobile_api/GetAllvendorsDetails/",function(data){
+                           var responObj = data.data;
+                           console.log(responObj);
+                            for (var i = 0; i < responObj.length; i++) {
+                                    $('#updateVendId').append('<option value="'+responObj[i].vendor_id+'">' + responObj[i].first_name +" "+responObj[i].last_name+ '</option>');
+                            }
+
+                     $.ajax({
+                     type: 'POST',
+                     url: 'https://api-ecommerce.datavivservers.in/mobile_api/GetOneOrderDetailsForAdm/',
+                     data: JSON.stringify ({ order_Id : id}),
+                     success: function(data) {
+                         console.log(data.data);
+                        var responObj = data.data;
+                        document.getElementById('usernameId').innerHTML=responObj.UserDetails.full_name;
+                        document.getElementById('umobnoID').innerHTML=responObj.UserDetails.mob_no;
+                        document.getElementById('vendorstoreNameId').innerHTML=responObj.Vendor_Store_details.store_popular_name;
+                        document.getElementById('venmobNoId').innerHTML=responObj.Vendor_Store_details.vendor_mob_no;
+                        document.getElementById('paymodeId').innerHTML=responObj.orderDetails.payment_mode;
+                        document.getElementById('payAmtId').innerHTML=responObj.orderDetails.payable_amount;
+                        document.getElementById('deliverychargesId').innerHTML=responObj.orderDetails.deliveryCharges;
+                        document.getElementById('deliverystatusId').innerHTML=responObj.orderDetails.delivery_status;
+                        console.log(responObj);
+                     },
+                     contentType: "application/json",
+                     dataType: 'json'
+                     });
+
+                     $(document).on('submit','#updateven',function(e){
+                        e.preventDefault();
+                        var venId = $("#updateVendId").val();
+                        $.ajax({
+                         type: 'POST',
+                         url: 'https://api-ecommerce.datavivservers.in/mobile_api/AsignOrderToVendorByAdmin/',
+                         data: JSON.stringify ({ order_Id : id,
+                                             vendor_Id :  venId
+                                           }),
+                     complete: function(data) {
+                        var responObj = data.data;
+                        console.log(responObj);
+                        if(data.status==200){
+                                       if(data.responseJSON.status=="success" && data.responseJSON.message=="OK"){
+                                       alert("Vendor Updated");
+                                       window.location.href="dashboard.html";
+                                     }else{
+                                         alert("Vendor not updated");   
+                                        } 
+                                     }
+                     },
+                     contentType: "application/json",
+                     dataType: 'json'
+                     });
+
+                    })
+                     
+                    });         
+
+            });
+
+
+      
+
+    </script>
+
+</body>
+</html>

@@ -6,15 +6,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Analytics Dashboard - This is an example dashboard created using build-in elements and components.</title>
+    <title>Punjab Sind-Dashboard</title>
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
     <link href="./main.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./styles/dropdown.css">
+    <link rel="shortcut icon" href="./assets/images/logo.png" type="image/x-icon">
     <!-- my code -->
     <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
     <!-- my code ends -->
+    <style>
+        tr>div>button{
+	        margin: 4px;
+        }
+    </style>
 </head>
 
 <body>
@@ -56,15 +69,15 @@
             <!-- Tab Bar -->
             <div class="app-header__content">
                 <div class="app-header-left" style="display: flex;flex-direction: column;">
-                    <p style="margin: 4px; font-weight: 500;" class="storename">Store Name:&nbsp;</p>
-                    <p style="margin: 4px; font-weight: 500;" class="storeaddress">Address:&nbsp;</p>
+                    <!-- <p style="margin: 4px; font-weight: 500;" class="storename">Store Name:&nbsp;</p>
+                    <p style="margin: 4px; font-weight: 500;" class="storeaddress">Address:&nbsp;</p> -->
                 </div>
                 <div class="app-header-right">
                     <div class="header-btn-lg pr-0">
                         <div class="widget-content p-0">
                             <div class="widget-content-wrapper">
                                 <div class="widget-content-left">
-                                    <p style="font-weight: 500;" class="storecontact">Contact:&nbsp;</p>
+                                    <!-- <p style="font-weight: 500;" class="storecontact">Contact:&nbsp;</p> -->
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading"></div>
@@ -124,22 +137,37 @@
                             </li>
 
                             <li class="app-sidebar__heading" style="width: 100%;">
-                                <a href="#orders" role="tab" data-toggle="tab">Orders</a>
+                                <a href="#deliveryboystab" role="tab" data-toggle="tab">Delivery Boys</a>
                             </li>
-
-                            <!-- <li class="app-sidebar__heading" style="width: 100%;">
-                                <a href="#invertory" role="tab" data-toggle="tab">Invertory</a>
-                            </li> -->
 
                             <li class="app-sidebar__heading" style="width: 100%;">
-                                <a href="#stock" id="stocktab" role="tab" data-toggle="tab">Stock</a>
+                                <a href="#orderstab" role="tab" data-toggle="tab">Orders</a>
                             </li>
-                            
+
+                            <li class="app-sidebar__heading" style="width: 100%;">
+                                <a href="#vendorstab" role="tab" data-toggle="tab">Vendors</a>
+                            </li>
+
+                            <li class="app-sidebar__heading" style="width: 100%;">
+                                <a href="#storestab" role="tab" data-toggle="tab">Stores</a>
+                            </li>
+
+                            <li class="app-sidebar__heading" style="width: 100%;">
+                                <a href="#customerstab" role="tab" data-toggle="tab">Customers</a>
+                            </li>
+
+                            <li class="app-sidebar__heading" style="width: 100%;">
+                                <a href="#offertab" role="tab" data-toggle="tab">Offers</a>
+                            </li>
+
+                            <li class="app-sidebar__heading" style="width: 100%;">
+                                <a href="#productstab" role="tab" data-toggle="tab">Products</a>
+                            </li>
+                            <!-- Logout -->
                             <li onclick="localStorage.clear();location.replace('index.html')" class="app-sidebar__heading" style="width: 100%;">
                                 <a href="#invertory" role="tab" data-toggle="tab">Log Out</a>
                             </li>
                         </ul>
-                        <img src="./assets/images/sardarheads.png" alt="sardarheads" srcset="" height="200px">
                     </div>
                 </div>
             </div>
@@ -150,13 +178,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="tab-content">
+                                    <!-- Dashboard -->
                                     <div role="tabpanel" class="tab-pane fade" id="dashboard">
                                         <div class="app-page-title">
                                             <div class="page-title-wrapper">
                                                 <div class="page-title-heading">
                                                     <div class="page-title-icon">
-                                                        <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                                        </i>
+                                                        <img src="./assets/images/logo.png" height="40" alt="logo">
                                                     </div>
                                                     <div>Analytics Dashboard
                                                         <div class="page-title-subheading">
@@ -165,247 +193,379 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Delivery Boys Table -->
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="main-card mb-3 card">
-                                                    <div class="card-header">Delivery Boys</div>
-                                                    <div class="table-responsive">
-                                                        <table id="deliveryboysTable"
-                                                            class="align-middle mb-0 table table-borderless table-striped table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>#</th>
-                                                                    <th>Name</th>
-                                                                    <th>Phone</th>
-                                                                    <th>Location</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr><td style="text-align:center;" colspan="5">loading...</td></tr>
-                                                                <!-- Iterating Delivery Boys from dashboard.js -->
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <!-- Most Ordered Overall Stores -->
+                                        <section class=" container-fluid">
+                                            <section class="col-15 col-sm-9 col-md-11">
+                                                <form class="form-container">
+                                                    <div><h4>Top 5 stores per week</h4></div>
+                                                    <table class="table" id="orderoverallListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Store Name</th>
+                                                                <th scope="col">Popular Store Name</th>
+                                                                <th scope="col">Total Orders</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
+                                        <!-- Most Ordered Stores -->
+                                        <section class=" container-fluid">
+                                            <section class="col-15 col-sm-9 col-md-11">
+                                                <form class="form-container">
+                                                    <div><h4>Overall top 5 stores</h4></div>
+                                                    <table class="table" id="orderListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Store Name</th>
+                                                                <th scope="col">Popular Store Name</th>
+                                                                <th scope="col">Total Orders</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
+                                        <div>
+                                            
                                         </div>
-                                        <!-- Delivery Boys Table Ends -->
-
-                                        <!-- Analysis -->
-                                        <h1 style="font-weight: 300;" class="bd-title">Sales Report</h1>
-                                        <div style="margin-bottom: 16px;" id="loader"><p>loading...</p></div>
-
-                                        
-                                        <div class="analysis today" style="display: none;margin: 16px 0;">
-                                            <!-- Todays Analysis -->
-                                            <h4 style="font-weight: 300;" class="bd-title">Todays Report</h4>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="card mb-3 widget-content bg-midnight-bloom">
-                                                        <div class="widget-content-wrapper text-white">
-                                                            <div class="widget-content-left">
-                                                                <div class="widget-heading">Total Orders</div>
-                                                                <div class="widget-subheading">For Today</div>
-                                                            </div>
-                                                            <div class="widget-content-right">
-                                                                <div id="analysis order" class="widget-numbers text-white">1896
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                        <!-- Offers Assigned To User -->
+                                        <section class="container-fluid">
+                                            <section class="col-15 col-sm-9 col-md-11">
+                                                <form class="form-container">
+                                                    <div>
+                                                        <h4>Offers Assigned To User</h4>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="card mb-3 widget-content bg-arielle-smile">
-                                                        <div class="widget-content-wrapper text-white">
-                                                            <div class="widget-content-left">
-                                                                <div class="widget-heading">Sale Amount</div>
-                                                                <div class="widget-subheading">For Today</div>
-                                                            </div>
-                                                            <div class="widget-content-right">
-                                                                <div id="analysis amount" class="widget-numbers text-white">₹ 568
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="card mb-3 widget-content bg-grow-early">
-                                                        <div class="widget-content-wrapper text-white">
-                                                            <div class="widget-content-left">
-                                                                <div class="widget-heading">Deliveries</div>
-                                                                <div class="widget-subheading">For Today</div>
-                                                            </div>
-                                                            <div class="widget-content-right">
-                                                                <div id="analysis deliveries" class="widget-numbers text-white">46%
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-xl-4">
-                                                    <div class="card mb-3 widget-content">
-                                                        <div class="widget-content-outer">
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left">
-                                                                    <div class="widget-heading">Orders Pick Up</div>
-                                                                    <div class="widget-subheading">For Today</div>
-                                                                </div>
-                                                                <div class="widget-content-right">
-                                                                    <div id="analysis pickup" class="widget-numbers text-success">1896</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <h4 style="font-weight: 300;" class="bd-title">Report Till Date</h4>
-                                            <!-- Past Orders Analysis -->
-                                            <div style="display: flex;">
-                                                <div style="margin:0 8px 8px 0">
-                                                    <p>From</p>
-                                                    <input type="date" id="calendar1" name="calendar1">
-                                                </div>
-                                                <div>
-                                                    <p>To</p>
-                                                    <input type="date" id="calendar2" name="calendar2">
-                                                </div>
-                                            </div>
-                                            <button id="checkreport" class="btn-wide btn btn-success">Check Report</button>
-                                            <div style="margin-bottom: 16px;display: none;" id="loader1"><p>loading...</p></div>
-                                            <div class="row" id="pastorderAnalysis" style="display: none;">
-                                                <div class="col-md-6 col-xl-4">
-                                                    <div class="card mb-3 widget-content">
-                                                        <div class="widget-content-outer">
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left">
-                                                                    <div class="widget-heading">Total Sale Amount</div>
-                                                                    <div class="widget-subheading">Total amount</div>
-                                                                </div>
-                                                                <div class="widget-content-right">
-                                                                    <div id="analysis salesamount" class="widget-numbers text-success">1896</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-xl-4">
-                                                    <div class="card mb-3 widget-content">
-                                                        <div class="widget-content-outer">
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left">
-                                                                    <div class="widget-heading">Products Sold</div>
-                                                                    <div class="widget-subheading">Total sales</div>
-                                                                </div>
-                                                                <div class="widget-content-right">
-                                                                    <div id="analysis sales" class="widget-numbers text-warning">$3M</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    <table class="table" id="offassignedListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Customer Name</th>
+                                                                <th scope="col">Mobile No. </th>
+                                                                <th scope="col">Offer Discription </th>
+                                                                <th scope="col">Offer Promocode</th>   
+                                                                <th scope="col">Offer Discription</th>    
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
                                     </div>
 
-                                    <!-- Orders Tab -->
-                                    <div role="tabpanel" class="tab-pane fade" id="orders">
-                                        <div class="container">
-                                            <div class="app-page-title">
-                                                <div class="page-title-wrapper">
-                                                    <div class="page-title-heading">
-                                                        <div class="page-title-icon">
-                                                            <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                                            </i>
-                                                        </div>
-                                                        <div>Orders
-                                                            <div class="page-title-subheading">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Available Orders -->
-                                            <h2>Available Orders</h2>
-                                            <div>
-                                                <table class="table table-striped" id="ordersTable">
-                                                    <thead>
-                                                        <th>Order ID</th>
-                                                        <th>Payment Status</th>
-                                                        <th>Order Status</th>
-                                                        <th>See more</th>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr><td style="text-align:center;" colspan="5">loading...</td></tr>
-                                                        <!-- Data iterated from api -->
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <!-- Available Orders ends here -->
-
-                                        <!-- My Orders -->
-                                        <div role="tabpanel">
-                                            <h2>My Orders</h2>
-                                            <div>
-                                                <table class="table table-striped" id="myordersTable">
-                                                    <thead>
-                                                        <th>Order ID</th>
-                                                        <th>Payment Status</th>
-                                                        <th>Order Status</th>
-                                                        <th>See more</th>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr><td style="text-align:center;" colspan="5">loading...</td></tr>
-                                                        <!-- Data iterated from api -->
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <!-- Available Orders ends here -->
-                                    </div>
-
-                                    <!-- Invertory Tab
-                                    <div role="tabpanel" class="tab-pane fade" id="invertory">
+                                    <!-- Delivery Boys Tab -->
+                                    <div role="tabpanel" class="tab-pane fade" id="deliveryboystab">
                                         <div class="app-page-title">
                                             <div class="page-title-wrapper">
                                                 <div class="page-title-heading">
                                                     <div class="page-title-icon">
-                                                        <i class="pe-7s-car icon-gradient bg-mean-fruit">
-                                                        </i>
+                                                        <img src="./assets/images/logo.png" height="40" alt="logo">
                                                     </div>
-                                                    <div>Orders
+                                                    <div>Delivery Boys
                                                         <div class="page-title-subheading">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <h1>Inventory Goes Here</h1>
-                                    </div> -->
 
-                                    <!-- Stock Tab -->
-                                    <div role="tabpanel" class="tab-pane fade" id="stock">
-                                        <h1>Stock</h1>
-                                        <table id="stockTable"
-                                            class="align-middle mb-0 table table-borderless table-striped table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>S.No</th>
-                                                    <th>Product Name</th>
-                                                    <th>Price</th>
-                                                    <th>Description</th>
-                                                    <th>Category</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- Iterating Delivery Boys from dashboard.js -->
-                                            </tbody>
-                                        </table>
+                                        <section class=" container-fluid">
+                                            <section class="col-15 col-sm-9 col-md-11">
+                                                <form class="form-container">
+                                                    <div><button type="button" class="btn btn-primary" onclick="window.open('DeliveryboyRegistration.html')">Add Delivery Boy</button></div>
+                                                    <table class="table" id="delboyListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Name</th>
+                                                                <th scope="col">Contact Number</th>
+                                                                <th scope="col">Action</th>                           
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
                                     </div>
+
+                                    <!-- Orders Tab -->    
+                                    <div role="tabpanel" class="tab-pane fade" id="orderstab">
+                                        <div class="app-page-title">
+                                            <div class="page-title-wrapper">
+                                                <div class="page-title-heading">
+                                                    <div class="page-title-icon">
+                                                        <img src="./assets/images/logo.png" height="40" alt="logo">
+                                                    </div>
+                                                    <div>Customers
+                                                        <div class="page-title-subheading">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <section class=" container-fluid">
+                                            <section class="col-15 col-sm-9 col-md-11">
+                                                <form class="form-container">
+                                                    <div>
+                                                        <h5 style="text-align:center;">Current Placed Order</h5>
+                                                    </div>
+                                                    <table class="table" id="CurrentPlaceOrdersId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">User Name</th>
+                                                                <th scope="col">Current Assigned Vendor</th>
+                                                                <th scope="col"></th>
+                                                                <th scope="col">Actions</th>
+                                                                <th scope="col"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
+                                    </div> 
+
+                                    <!-- Stores Tab -->
+                                    <div role="tabpanel" class="tab-pane fade" id="storestab">
+                                        <div class="app-page-title">
+                                            <div class="page-title-wrapper">
+                                                <div class="page-title-heading">
+                                                    <div class="page-title-icon">
+                                                        <img src="./assets/images/logo.png" height="40" alt="logo">
+                                                    </div>
+                                                    <div>Stores
+                                                        <div class="page-title-subheading">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <section class=" container-fluid">
+                                            <section class="col-19 col-sm-17 col-md-17">
+                                                <form class="form-container">
+                                                    <div>
+                                                        <h3>Vendor Stores List</h3>
+                                                    </div>
+                                                    <div><button type="button" class="btn btn-primary" onclick="window.open('AddvendorStore.html')">Add Store</button></div>
+                                                    <table class="table" id="storeListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Store Name</th>
+                                                                <th scope="col">City</th>
+                                                                <th scope="col">Address</th>
+                                                                <th scope="col">Contact Person</th>
+                                                                <th scope="col">Contact Number</th>
+                                                                <th scope="col">Vendor Username</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
+                                    </div>
+
+                                    <!-- Customers Tab -->
+                                    <div role="tabpanel" class="tab-pane fade" id="customerstab">
+                                        <div class="app-page-title">
+                                            <div class="page-title-wrapper">
+                                                <div class="page-title-heading">
+                                                    <div class="page-title-icon">
+                                                        <img src="./assets/images/logo.png" height="40" alt="logo">
+                                                    </div>
+                                                    <div>Customers
+                                                        <div class="page-title-subheading">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <section class=" container-fluid">
+                                            <section class="col-15 col-sm-9 col-md-11">
+                                                <form class="form-container">
+                                                    <div><h4>Most Ordered Customers List</h4></div>
+                                                    <table class="table" id="customerListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Customer Name</th>
+                                                                <th scope="col">Customer UserName</th>
+                                                                <th scope="col">Total Orders</th>
+                                                                <!-- <th scope="col">Action</th> -->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
+                                    </div>
+
+                                    <!-- Products Tab -->
+                                    <div role="tabpanel" class="tab-pane fade" id="productstab">
+                                        <div class="app-page-title">
+                                            <div class="page-title-wrapper">
+                                                <div class="page-title-heading">
+                                                    <div class="page-title-icon">
+                                                        <img src="./assets/images/logo.png" height="40" alt="logo">
+                                                    </div>
+                                                    <div>Products
+                                                        <div class="page-title-subheading">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Products Cat List -->
+                                        <section class=" container-fluid">
+                                            <section class="col-19 col-sm-17 col-md-17">
+                                                <form class="form-container">
+                                                    <div>
+                                                        <h5>Product Categories List</h5>
+                                                    </div>
+                                                    <div><button type="button" class="btn btn-primary" onclick="window.open('CreateNewProductCategory.html')">Add New Category</button></div>
+                                                    <table class="table" id="productscatListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Category Name</th>
+                                                                <th scope="col">Category Discription</th>
+                                                                <th scope="col">Product Image</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
+
+                                        <!-- Products List -->
+                                        <section class=" container-fluid">
+                                            <section class="col-19 col-sm-17 col-md-17">
+                                                <form class="form-container">
+                                                    <div>
+                                                        <h5>Products List</h5>
+                                                    </div>
+                                                    <div><button type="button" class="btn btn-primary" onclick="window.open('AddNewProduct.html')">Add New Product</button></div>
+                                                    <table class="table" id="productsListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Product Name</th>
+                                                                <th scope="col">Product Discription</th>
+                                                                <th scope="col">Product Price</th>
+                                                                <th scope="col">Product Status</th>
+                                                                <th scope="col">Product Image</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
+                                    </div>
+
+                                    <!-- Offers Tab -->
+                                    <div role="tabpanel" class="tab-pane fade" id="offertab">
+                                        <div class="app-page-title">
+                                            <div class="page-title-wrapper">
+                                                <div class="page-title-heading">
+                                                    <div class="page-title-icon">
+                                                        <img src="./assets/images/logo.png" height="40" alt="logo">
+                                                    </div>
+                                                    <div>Customers
+                                                        <div class="page-title-subheading">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <section class=" container-fluid">
+                                            <section class="col-15 col-sm-9 col-md-11">
+                                                <form class="form-container">
+                                                    <div><h4>Get All Offers</h4></div>
+                                                    <div><button type="button" class="btn btn-primary" onclick="window.open('AddNewOffer.html')">Add New Offer</button></div>    
+                                                    <table class="table" id="offerListTableId">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Offer Title Name</th>
+                                                                <th scope="col">Promo Code</th>
+                                                                <th scope="col">Offer Discription</th>
+                                                                <th scope="col">Offer Start Date</th>
+                                                                <th scope="col">Offer End Date</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </section>
+                                        </section>
+                                    </div>
+
+                                    <!-- Vendors Tab -->
+                                    <div role="tabpanel" class="tab-pane fade" id="vendorstab">
+                                        <div class="container">
+                                            <div class="app-page-title">
+                                                <div class="page-title-wrapper">
+                                                    <div class="page-title-heading">
+                                                        <div class="page-title-icon">
+                                                            <img src="./assets/images/logo.png" height="40" alt="logo">
+                                                        </div>
+                                                        <div>Vendors 
+                                                            <div class="page-title-subheading">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Vendors Table -->
+                                        <div class="row">
+                                            <section class=" container-fluid">
+                                                <section class="col-15 col-sm-8 col-md-7">
+                                                    <form class="form-container">
+                                                    <div><button type="button" class="btn btn-primary" onclick="window.open('VendorRegistration.html')">Add New Vendor</button></div>
+                                                        <table class="table" id="venListTableId">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">First Name</th>
+                                                                    <th scope="col">Last Name</th>
+                                                                    <th scope="col">Vendor Username</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
+                                                    </form>
+                                                </section>
+                                            </section>
+                                        </div>
+                                    </div>
+                                    <!-- Vendors Tab End here -->
+
+                                    
+                                <!-- Last tab ends -->   
 
                                 </div>
                             </div>

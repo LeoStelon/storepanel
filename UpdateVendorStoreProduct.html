@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./global.css" />
+
+    <style>
+        body{
+            background: linear-gradient(135deg, #caf2fc 50%, #f1f2f6 50%);
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
+
+</head>
+<body>
+
+    <section class="d-flex justify-content-center container-fluid">
+        <section class="col-9 col-sm-5 col-md-7">
+
+            <form class="form-container" name="AddVenStoreProductForm" method="post" id="AddVenStoreProductFormId" action="">
+
+                <div class="form-group">
+                    <select id="ProductNameDDId" required>
+                        <option value="">Select Product Name</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select id="ProductCategoryDDId"required >
+                        <option value="">Select Product Category</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Quantity</label>
+                    <input type="number" class="form-control" required id="quantityId" value="">
+                </div>
+                <div class="form-group">
+                    <label for="">Cost Price</label>
+                    <input type="number" class="form-control" required id="costpriceId" value="">
+                </div>
+                <div class="form-group">
+                    <label for="">Selling Price</label>
+                    <input type="number" class="form-control" required id="sellingpriceId" value="">
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+
+        </section>
+    </section>
+
+
+    <script>
+
+
+                $(document).ready(function () {
+                    var url_string = window.location.href;
+                    var url = new URL(url_string);
+                    var vendorId = url.searchParams.get("vendorId");
+                    var j = url.searchParams.get("i");
+                    var ventableId = url.searchParams.get("ventableId");
+                    console.log(ventableId);
+                    console.log(vendorId);
+                    console.log(j);
+
+                    var selectedProductId;
+                    var selectedProductCategoryId;
+                    
+                    $.getJSON("https://api-ecommerce.datavivservers.in/mobile_api/productDetailsView/",function(data){
+                           var prodNameResponseObj = data.data;
+                                    for ( i = 0; i < prodNameResponseObj.length; i++) {
+                                    $('#ProductNameDDId').append('<option value="'+prodNameResponseObj[i].id+'">' + prodNameResponseObj[i].product_name + '</option>');
+                                }
+                         });
+                   
+
+                    $.getJSON("https://api-ecommerce.datavivservers.in/mobile_api/ProductCategoryDetails/",function(data){
+                           var categoryNameResponseObj = data.data;
+                         
+                           for ( i = 0; i < categoryNameResponseObj.length; i++) {
+                                    $('#ProductCategoryDDId').append('<option value="'+categoryNameResponseObj[i].id+'">' + categoryNameResponseObj[i].category_name + '</option>');
+                                }
+                         });
+                   
+                    $.post("https://cors-anywhere.herokuapp.com/"+"http://api-ecommerce.datavivservers.in/mobile_api/GetAllProductsForStoreById/",
+                            {
+                                vendor_id : vendorId
+                            },
+                            function(data, status){
+                                
+                                var responseObj = data.data;
+                                console.log(responseObj[j]);
+                            
+                        //    $("#ProductCategoryDDId").val(responseObj[j].product_category_category_name);
+                            $("#quantityId").val(responseObj[j].quantity);
+                            $("#costpriceId").val(responseObj[j].product_product_price);
+                            $("#sellingpriceId").val(responseObj[j].selling_price);   
+                            
+                            var pid =  responseObj[j].id;
+                    
+                    $(document).on("submit","#AddVenStoreProductFormId" , function(e){
+                            e.preventDefault();
+
+                            var productId = $("#ProductNameDDId").val();
+                            var categoryId =$("#ProductCategoryDDId").val();
+                            var quantity = $("#quantityId").val();
+                            var costprice = $("#costpriceId").val();
+                            var sellingprice = $("#sellingpriceId").val();
+                            
+                            var addVendorStoreProductModel = {
+                                vendor_id : ventableId ,
+                                product_id : productId,
+                                product_category_id : categoryId,
+                                quantity : quantity,
+                                price : costprice,
+                                selling_price : sellingprice
+                              };
+                              console.log(costprice)
+
+                    $.ajax({
+
+                            method : "PUT",
+                            dataType : "json",
+                            data : JSON.stringify(addVendorStoreProductModel),
+                            url : "https://api-ecommerce.datavivservers.in/mobile_api/AddProductsToVendor/"+pid+"/",
+                            contentType: "application/json;charset=utf-8",
+
+                            complete: function(data){
+
+                                if(data.status==200){
+                                alert("Product Updated Sucessfully");    
+                                window.history.back()
+                                }else{
+                                     alert(data.responseJSON.message);
+                                }       
+                                },
+
+                         });
+
+                    });
+                });    
+            });
+
+    </script>
+
+</body>
+</html>

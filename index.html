@@ -1,30 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="main2.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./global.css" />
+    <title></title>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="f-contain">
-            <h1 class="head">Login</h1>
-            <div class="lform" id="">
+    <section class="d-flex justify-content-center container-fluid">
+        <section class="col-12 col-sm-6 col-md-3">
+            <form class="form-container" name="LoginForm" method="post" id="LoginFormId">
+                <h5>Admin Login</h5>
+                <div class="form-group">
+                    <label for="uname">Username</label>
+                    <input type="text" class="form-control"name="username" id="usernameId" required value="">
+                </div>
+                <div class="form-group">
+                    <label for="passname">Password</label>
+                    <input type="password" class="form-control" name="password" id="passwordId" required value"">
+                </div>
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </form>
+        </section>
+    </section>
 
-                <form action="dashboard.html" method="POST">
-                    <h4>Username</h3>
-                    <input type="text" id="username"  value="vender2@gmail.com">
-                    <h4>Password</h3>
-                    <input type="password" id="password"  value="Vendor@123">
-                    <button type="submit" class="l-btn">Login</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <script src="scripts/main2.js"></script>
+    <script>
+    $(document).ready( function (){
+        $(document).on("submit","#LoginFormId" , function(e){
+            e.preventDefault();
+            var uname = $("#usernameId").val();
+            var pass = $("#passwordId").val();
+            var loginCredentialsModel = {
+                    username : uname,
+                    password : pass
+            };
+            $.ajax({
+                method: "POST",  
+                dataType:"json",
+                data: JSON.stringify(loginCredentialsModel),
+                url: "https://api-ecommerce.datavivservers.in/mobile_api/AdminLogin/",
+                headers : {
+                    "Content-Type" : "application/json; charset=utf-8",
+                    "Accept" : "application/json",
+                    },
+                contentType: "application/json;charset=utf-8",
+                crossDomain : true,
+                complete: function(data){
+                    console.log(data.responseJSON);
+                    if(data.status==200){
+                        if(data.responseJSON.status=="success" && data.responseJSON.message=="OK"){
+                            if (typeof(Storage) !== "undefined") {
+                                // Store
+                                localStorage.setItem("AUTH_TOKEN", data.responseJSON.token);
+                                // Retrieve
+                                window.location.replace('dashboard.html')
+                            }
+                        }
+                    }else if(data.status==400){
+                        if(data.responseJSON.status=="error"){
+                            alert(data.responseJSON.message.non_field_errors[0]+" Try again.");
+                        }
+                    }else{
+                        console.log(data);
+                    }
+                },
+                failure: function(errMsg) {
+                    console.log(errMsg.status);
+                }
+             }); 
+        });
+    });
+    </script>
 </body>
 </html>
